@@ -78,8 +78,13 @@ class MailingDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         mailing = self.get_object()
         send_mailing(mailing)
-        MailingLog.objects.create(mailing=mailing, status=True, response="Рассылка успешно отправлена")
-        messages.success(request, 'Рассылка успешно отправлена!')
+        logs = MailingLog.objects.filter(mailing=mailing).order_by('-sent_at')
+
+        if logs:
+            messages.success(request, 'Рассылка завершена')
+        else:
+            messages.error(request, 'Не удалось выполнить рассылку. Проверьте настройки.')
+
         return redirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
@@ -87,11 +92,12 @@ class MailingDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['clients'] = Client.objects.all()
         context['clients'] = mailing.clients.all()
-        context['logs'] = MailingLog.objects.filter(mailing=self.object).order_by(
+        logs = MailingLog.objects.filter(mailing=self.object).order_by(
             '-sent_at')
-        context['logs'] = mailing.logs.first()
-        print(context['clients'])
-        print(context['logs'])
+        context['last_log'] = mailing.logs.first()
+        # print(context['clients'])
+        # print(context['last_log'])
+        # print(logs)
         return context
 
     def get_success_url(self):
@@ -171,6 +177,12 @@ class MainPageView(TemplateView):
         posts = Post.objects.filter(is_published=True)
         random_posts = random.sample(list(posts), min(3, len(posts)))
         context['random_posts'] = random_posts
+        context['mailing_count'] = Mailing.objects.count()
+        active_mailing_count = Mailing.objects.filter(status__in=['created', 'started'])
+        context['active_mailing_count'] = active_mailing_count.count()
+        context['clients_count'] = Client.objects.count()
+
+        print(context)
         return context
 
 
