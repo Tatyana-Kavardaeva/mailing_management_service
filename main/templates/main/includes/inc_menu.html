@@ -1,0 +1,34 @@
+<div class="collapse bg-secondary" id="navbarHeader">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+                <h4 class="text-white">ФОРТУНА</h4>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+                <h5 class="text-white">Навигация</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'main:main_page' %}" class="text-white">Главная</a></li>
+                    <li><a href="{% url 'main:contact' %}" class="text-white">Контакты</a></li>
+
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
+                    {% else %}
+                    <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
+                    <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'blog:blog_list' %}" class="text-white">Мы пишем</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>

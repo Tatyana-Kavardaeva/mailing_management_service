@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Создание рассылки</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5> Для создания рассылки выполните следующие действия:</h5>
+
+            <div class="mb-4">
+                <h6>Шаг 1. Подготовьте сообщение:</h6>
+                <a href="{% url 'main:message_create' %}" class="btn btn-primary">Добавить сообщение</a>
+                <a href="{% url 'main:messages_list' %}" class="btn btn-secondary">Посмотреть сообщения</a>
+            </div>
+
+            <div class="mb-4">
+                <h6>Шаг 2. Проверьте получателей:</h6>
+                <a href="{% url 'main:client_create' %}" class="btn btn-primary">Добавить клиента</a>
+                <a href="{% url 'main:clients_list' %}" class="btn btn-secondary">Посмотреть список клиентов</a>
+            </div>
+
+            <div class="mb-4">
+                <h6>Шаг 3. Завершите настройки рассылки:</h6>
+                <a href="{% url 'main:mailing_create' %}" class="btn btn-primary">Настроить рассылку</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

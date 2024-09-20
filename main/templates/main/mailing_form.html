@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+    <div class="container">
+        <div class="col-12">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                Рассылка: {{ object.message.title }}
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success">
+                                {% if object %}
+                                    Сохранить
+                                {% else %}
+                                    Создать
+                                {% endif %}
+                            </button>
+
+                            <a href="{% url 'main:mailings_list' %}" class="btn btn-link">Отменить</a>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head><script src="{% static 'js/color-modes.js' %}"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ФОРТУНА</title>
+    <link href="{% static '/css/bootstrap.css' %}" rel="stylesheet">
+    {% include 'main/includes/inc_menu.html' %}
+</head>
+<body>
+
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+     {% if request.path == '/' %}
+        <h1 class="display-4">Cервис email рассылок "ФОРТУНА"</h1>
+        <p class="lead">Доверьте свои письма нашей удаче!</p>
+    {% endif %}
+</div>
+{% block content %}
+{% endblock %}
+
+<div class="container">
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                ФОРТУНА
+                <small class="d-block mb-3 text-muted">&copy; {% now 'Y' %}</small>
+            </div>
+
+            <div class="col-6 col-md">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{% url 'blog:blog_list' %}">Мы пишем</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>О нас</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{% url 'main:contact' %}">Наши контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.js' %}"></script></script>
+</body>
+</html>

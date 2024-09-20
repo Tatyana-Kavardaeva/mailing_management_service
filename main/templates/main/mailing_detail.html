@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <div class="col-6">
+        <div class="card shadow-sm">
+            <h5 class="card-text text-center">"{{ object.message.title }}"</h5>
+
+            <div class="card-body">
+                <p class="card-text">{{ object.description }}</p>
+                <p class="card-text">Дата первой рассылки: {{ object.start_datetime }}</p>
+                <p class="card-text">Дата завершения рассылки: {{ object.last_datetime }}</p>
+                {% if object.periodicity %}
+                <p class="card-text">Периодичность: {{ object.periodicity }}</p>
+                {% else %}
+                <p class="card-text">Периодичность: не указана</p>
+                {% endif %}
+                <p class="card-text">Статус: {{ object.status }}</p>
+                <p class="card-text">Содержание: {{ object.message.content }}</p>
+                <p class="card-text">Клиенты:</p>
+                <ul>
+                    {% if clients %}
+                        {% for client in clients %}
+                        <li>{{ client.name }} ({{ client.email }})</li>
+                        {% endfor %}
+                    {% else %}
+                    <li>Нет клиентов.</li>
+                    {% endif %}
+                </ul>
+                <p>Отчет об отправке:</p>
+                <ul>
+                    {% if logs %}
+                    <li>{{ logs.sent_at }} - {{ logs.response }}</li>
+                    {% else %}
+                    <li>Нет записей о попытках отправки.</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="card-body">
+                <form method="post" class="d-flex flex-column">
+                    {% csrf_token %}
+                    <button type="submit">Отправить рассылку</button>
+                </form>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <a type="button" class="btn btn-outline-secondary btn-sm"
+                       href="{% url 'main:mailings_list' %}"
+                       role="button">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

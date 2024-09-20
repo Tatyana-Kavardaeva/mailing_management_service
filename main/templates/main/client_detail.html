@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-6">
+        <div class="card shadow-sm">
+            <h5 class="card-title"><strong>{{ object.name }}</strong></h5>
+            <!--            <img src="{{ object.image | media_filter }}">-->
+            <div class="card-body">
+                <p class="card-text">Email: {{ object.email }}</p>
+                {% if object.comment %}
+                    <p>Комментарий: {{ object.comment }}</p>
+                {% else %}
+                    <p>Без комментариев</p>
+                {% endif %}
+                <div class="d-grid gap-2 d-md-block">
+                    <a type="button" class="btn btn-outline-dark" href="{% url 'main:clients_list' %}"
+                       role="button">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

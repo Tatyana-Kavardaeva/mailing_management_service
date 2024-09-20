@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-9">
+        <div class="card shadow-sm">
+            <h5 class="card-title"><strong>"{{ object.title }}" ({{ object.slug }})</strong></h5>
+            <img src="{{ object.image | media_filter }}">
+
+            <div class="card-body">
+                <p class="card-text">{{ object.body }}</p>
+                <p class="card-text">Дата: {{ object.created_at }}</p>
+                <p class="card-text">Просмотры: {{ object.view_counter }}</p>
+                <div class="d-grid gap-2 d-md-block">
+                    <a type="button" class="btn btn-outline-success" href="{% url 'blog:blog_update' object.pk %}"
+                       role="button">Редактировать</a>
+                    <a type="button" class="btn btn-outline-danger" href="{% url 'blog:blog_delete' object.pk %}"
+                       role="button">Удалить</a>
+                    <a type="button" class="btn btn-outline-dark" href="{% url 'blog:blog_list' %}"
+                       role="button">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

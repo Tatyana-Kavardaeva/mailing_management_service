@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+<p class="text-center mb-2">
+    <a href="{% url 'main:message_create' %}" class="btn btn-dark my-2">Добавить сообщение</a>
+    <a type="button" class="btn btn-outline-dark" href="{% url 'main:make_mailing' %}"
+       role="button">Вернуться к созданию рассылки</a>
+</p>
+
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+    {% for object in object_list %}
+
+    <div class="col-6">
+
+        <div class="card shadow-sm">
+            <h5 class="card-title text-center mt-3 mb-3"><strong>{{ object.title }}</strong></h5>
+
+            <div class="card-body">
+                <p class="card-text">
+                    <img src="{{ object.image | media_filter }}" class="card-img-top"
+                         style="height: 200px; width: 100%; object-fit: contain;">
+                <p class="card-text">
+                    {{ object.content|slice:":100" }}{% if object.body|length > 100 %}...{% endif %}
+                </p>
+                <div class="d-flex flex-column">
+                    <a type="button" class="btn btn-outline-primary btn-sm"
+                       href="{% url 'main:message_detail' object.pk %}"
+                       role="button">Посмотреть</a>
+                    <a type="button" class="btn btn-outline-primary btn-sm"
+                       href="{% url 'main:message_update' object.pk %}"
+                       role="button">Редактировать</a>
+                    <a type="button" class="btn btn-outline-danger btn-sm"
+                       href="{% url 'main:message_delete' object.pk %}"
+                       role="button">Удалить</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
