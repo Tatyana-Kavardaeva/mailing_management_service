@@ -8,12 +8,16 @@
 
             <div class="card-body">
                 <p class="card-text">{{ object.description }}</p>
-                <p class="card-text">Дата первой рассылки: {{ object.start_datetime }}</p>
-                <p class="card-text">Дата завершения рассылки: {{ object.last_datetime }}</p>
-                {% if object.periodicity %}
-                <p class="card-text">Периодичность: {{ object.periodicity }}</p>
+                {% if object.last_datatime %}
+                    <p class="card-text">Дата первой рассылки: {{ object.start_datetime }}</p>
+                    <p class="card-text">Дата завершения рассылки: {{ object.last_datetime }}</p>
                 {% else %}
-                <p class="card-text">Периодичность: не указана</p>
+                    <p class="card-text">Дата рассылки: {{ object.start_datetime }}</p>
+                {% endif %}
+                {% if object.periodicity %}
+                    <p class="card-text">Периодичность: {{ object.periodicity }}</p>
+                {% else %}
+                    <p class="card-text">Периодичность: не указана</p>
                 {% endif %}
                 <p class="card-text">Статус: {{ object.status }}</p>
                 <p class="card-text">Содержание: {{ object.message.content }}</p>

@@ -15,9 +15,13 @@
 
                     <div class="card-body">
                         <p class="card-text">
-                        <p>Дата начала рассылки: {{ object.start_datetime }}</p>
-                        <p>Дата завершения рассылки: {{ object.start_datetime }}</p>
-                        <p>{{ object.status }}</p>
+                            {% if object.last_datatime %}
+                        <p class="card-text">Дата первой рассылки: {{ object.start_datetime }}</p>
+                        <p class="card-text">Дата завершения рассылки: {{ object.last_datetime }}</p>
+                        {% else %}
+                        <p class="card-text">Дата рассылки: {{ object.start_datetime }}</p>
+                        {% endif %}
+                        <p>Статус: {{ object.status }}</p>
                         </p>
                         <div class="d-flex flex-column">
                             <a type="button" class="btn btn-outline-primary btn-sm"
