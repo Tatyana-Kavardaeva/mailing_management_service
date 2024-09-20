@@ -29,8 +29,8 @@
                 </ul>
                 <p>Отчет об отправке:</p>
                 <ul>
-                    {% if logs %}
-                    <li>{{ logs.sent_at }} - {{ logs.response }}</li>
+                    {% if last_log %}
+                    <li>{{ last_log.sent_at }} - {{ last_log.response }}</li>
                     {% else %}
                     <li>Нет записей о попытках отправки.</li>
                     {% endif %}
