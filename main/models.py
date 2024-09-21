@@ -50,7 +50,7 @@ class Mailing(models.Model):
                                           help_text="Введите дату и время начала рассылки", **NULLABLE)
     next_datetime = models.DateTimeField(default=timezone.now, verbose_name="Дата и время следующей отправки рассылки", **NULLABLE,
                                          editable=False)
-    last_datetime = models.DateTimeField(default=timezone.now, verbose_name="Дата и время окончания рассылки",
+    last_datetime = models.DateTimeField(verbose_name="Дата и время окончания рассылки",
                                          help_text="Введите дату и время окончания рассылки", **NULLABLE)
     periodicity = models.CharField(max_length=10, choices=PERIODICITY_CHOICES, verbose_name='Периодичность', **NULLABLE)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created', verbose_name='Статус рассылки')
