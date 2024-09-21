@@ -48,7 +48,7 @@ class Message(models.Model):
 class Mailing(models.Model):
     start_datetime = models.DateTimeField(default=timezone.now, verbose_name="Дата и время начала рассылки",
                                           help_text="Введите дату и время начала рассылки", **NULLABLE)
-    next_datetime = models.DateTimeField(default=timezone.now, verbose_name="Дата и время следующей отправки рассылки", **NULLABLE,
+    next_datetime = models.DateTimeField(verbose_name="Дата и время следующей отправки рассылки", **NULLABLE,
                                          editable=False)
     last_datetime = models.DateTimeField(verbose_name="Дата и время окончания рассылки",
                                          help_text="Введите дату и время окончания рассылки", **NULLABLE)
