@@ -1,7 +1,6 @@
 import smtplib
 import datetime
 from time import sleep
-
 import pytz
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.core.mail import send_mail
@@ -19,7 +18,7 @@ def send_mailing(mailing):
 
     for mailing in mailings:
         # проверяем не наступил ли срок окончания рассылки
-        if mailing.last_datetime and mailing.last_datetime <= current_datetime:
+        if mailing.last_datetime is not None and mailing.last_datetime <= current_datetime:
             mailing.status = 'completed'
             mailing.save()
 
@@ -65,6 +64,10 @@ def send_mailing(mailing):
         except smtplib.SMTPException as e:
             MailingLog.objects.create(mailing=mailing, status=False, response=str(e))
             print(f"Ошибка при отправке {mailing}: {e}")
+
+    if mailing.last_datetime is None:
+        mailing.status = 'completed'
+        mailing.save()
 
 
 def start_mailing():

@@ -182,7 +182,7 @@ class MainPageView(TemplateView):
         context['active_mailing_count'] = active_mailing_count.count()
         context['clients_count'] = Client.objects.count()
 
-        print(context)
+        # print(context)
         return context
 
 
