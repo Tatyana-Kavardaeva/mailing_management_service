@@ -5,8 +5,7 @@ from main.apps import MainConfig
 from main.views import MailingListView, MailingDetailView, MailingCreateView, MailingUpdateView, MailingDeleteView, \
     ContactPageView, MainPageView, ClientListView, ClientDetailView, ClientCreateView, ClientUpdateView, \
     ClientDeleteView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, \
-    MailingLogListView, MailingLogDetailView, MailingLogCreateView, MailingLogUpdateView, MailingLogDeleteView, \
-    MakeMailingView
+    MakeMailingView, get_mailinglog_view
 
 app_name = MainConfig.name
 
@@ -32,13 +31,7 @@ urlpatterns = [
     path('message_update/<int:pk>/', MessageUpdateView.as_view(), name='message_update'),
     path('message_delete/<int:pk>/', MessageDeleteView.as_view(), name='message_delete'),
 
-    path('logs_list/', MailingLogListView.as_view(), name='logs_list'),
-    path('log<int:pk>/', MailingLogDetailView.as_view(), name='log_detail'),
-    path('log_create/', MailingLogCreateView.as_view(), name='log_create'),
-    path('log_update/<int:pk>/', MailingLogUpdateView.as_view(), name='log_update'),
-    path('log_delete/<int:pk>/', MailingLogDeleteView.as_view(), name='log_delete'),
+    path('logs_list/', get_mailinglog_view, name='logs_list'),
 
     path('contact/', ContactPageView.as_view(), name='contact')
-    # path('versions/', , name='version'),
-    # path('activity/<int:pk>/', toggle_activity, name='toggle_activity'),
 ]
