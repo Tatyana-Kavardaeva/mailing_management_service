@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 PERIODICITY_CHOICES = [
@@ -22,6 +24,8 @@ class Client(models.Model):
     name = models.CharField(max_length=150, verbose_name='Клиент')
     email = models.EmailField(verbose_name='Email', unique=True)
     comment = models.TextField(verbose_name='Комментарий', **NULLABLE)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', help_text='Укажите владельца',
+                              **NULLABLE)
 
     def __str__(self):
         return f'Клиент {self.email}({self.name})'
@@ -36,6 +40,8 @@ class Message(models.Model):
     content = models.TextField(help_text='Введите текст сообщения', verbose_name='Содержание')
     image = models.ImageField(upload_to="blogs/image", **NULLABLE, verbose_name="Изображение",
                               help_text="Загрузите изображение")
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', help_text='Укажите владельца',
+                              **NULLABLE)
 
     def __str__(self):
         return self.title
@@ -57,6 +63,9 @@ class Mailing(models.Model):
     message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Сообщение',
                                    related_name='mailings')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты', related_name='mailings')
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', help_text='Укажите владельца',
+                              **NULLABLE)
+    is_active = models.BooleanField(default=True, verbose_name='Активная')
 
     def __str__(self):
         return f'Рассылка: "{self.message}" '
@@ -68,6 +77,9 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+        permissions = [
+            ('set_active_status', 'Can active mailing'),
+        ]
 
 
 class MailingLog(models.Model):
@@ -75,6 +87,8 @@ class MailingLog(models.Model):
     sent_at = models.DateTimeField(auto_now_add=True, verbose_name="Время отправки рассылки", **NULLABLE)
     status = models.BooleanField(default=False, verbose_name='Статус попытки')
     response = models.TextField(verbose_name='Ответ почтового сервера', **NULLABLE)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', help_text='Укажите владельца',
+                              **NULLABLE)
 
     def __str__(self):
         return f'Попытка рассылки {self.mailing.pk}'
