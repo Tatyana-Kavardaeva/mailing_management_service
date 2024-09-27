@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.templatetags.pytils_translit import slugify
 from blog.models import Post
+from blog.services import get_posts_from_cache
 
 
 class BlogCreateView(CreateView):
@@ -23,9 +24,7 @@ class BlogListView(ListView):
     model = Post
 
     def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
-        return queryset
+        return get_posts_from_cache()
 
 
 class BlogDetailView(DetailView):
@@ -41,7 +40,6 @@ class BlogDetailView(DetailView):
 class BlogUpdateView(UpdateView):
     model = Post
     fields = ('title', 'body', 'image',)
-    # success_url = reverse_lazy('blog:blog_list')
 
     def get_success_url(self):
         return reverse('blog:blog_view', args=[self.kwargs.get('pk')])
