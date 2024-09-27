@@ -1,12 +1,16 @@
 {% extends 'main/base.html' %}
 {% load my_tags %}
 {% block content %}
+<div class="header px-3 py-3 pt-md-5 pb-md-4">
+    <h2 class="text">Клиенты:</h2>
+</div>
+{% if not is_manager %}
 <p class="text-center mb-2">
     <a href="{% url 'main:client_create' %}" class="btn btn-dark my-2">Добавить клиента</a>
     <a type="button" class="btn btn-outline-dark" href="{% url 'main:make_mailing' %}"
        role="button">Вернуться к созданию рассылки</a>
 </p>
-
+{% endif %}
 <div class="my-3 p-3 bg-body rounded shadow-sm">
     {% for object in object_list %}
     <div class="col-6">
@@ -20,6 +24,7 @@
                 <p>Комментарий: {{ object.comment }}</p>
                 {% endif %}
                 </p>
+                {% if not is_manager %}
                 <div class="d-flex flex-column">
                     <a type="button" class="btn btn-outline-primary btn-sm"
                        href="{% url 'main:client_detail' object.pk %}"
@@ -31,6 +36,7 @@
                        href="{% url 'main:client_delete' object.pk %}"
                        role="button">Удалить</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load my_tags %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
     <h2 class="display-4">Отчеты об отправке рассылок</h2>
 </div>
@@ -10,12 +11,16 @@
             {% for object in object_list %}
             <div class="col">
                 <div class="card shadow-sm">
-                    <h5 class="card-title mt-3 mb-3"><strong>Попытка рассылки {{ object.pk }}</strong></h5>
+                    <h5 class="card-title mt-3 mb-3"><strong>{{ object.mailing }}</strong></h5>
 
                     <div class="card-body">
-                        <p class="card-text">Рассылка: {{ object.pk }}</p>
+                        <p class="card-text"></p>
                         <p class="card-text">Дата и время: {{ object.sent_at }}</p>
-                        <p class="card-text">Статус: {{ object.status }}</p>
+                        {% if object.status == True %}
+                        <p class="card-text">Статус: отправлена</p>
+                        {% else %}
+                        <p class="card-text">Статус: ошибка отправки</p>
+                        {% endif %}
                         <p class="card-text">Ответ сервера: {{ object.response }}</p>
                     </div>
                 </div>
@@ -24,4 +29,15 @@
         </div>
     </div>
 </div>
+{% else %}
+<p class="text-center mb-2">
+    Недостаточно прав доступа. Авторизуйтесь в системе или пройдите регистрацию
+</p>
+<p class="text-center mb-2">
+    <a type="button" class="btn btn-outline-dark" href="{% url 'users:login' %}"
+       role="button">Войти</a>
+    <a type="button" class="btn btn-outline-dark" href="{% url 'users:register' %}"
+       role="button">Регистрация</a>
+</p>
+{% endif %}
 {% endblock %}
