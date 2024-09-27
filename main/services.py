@@ -2,13 +2,9 @@ import smtplib
 import datetime
 from time import sleep
 import pytz
-
 from django.core.mail import send_mail
 from config import settings
 from main.models import MailingLog
-
-from config.settings import CACHE_ENABLED
-from django.core.cache import cache
 
 
 def send_mailing(mailing):
