@@ -1,5 +1,5 @@
-from django.forms import ModelForm, BooleanField, forms
-
+from django.forms import ModelForm, BooleanField, CharField
+from django import forms
 from main.models import Mailing, Client, Message, MailingLog
 
 
@@ -24,7 +24,8 @@ class StyleFormMixin:
 class MailingForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Mailing
-        fields = '__all__'
+        exclude = ('is_active', 'status', 'owner')
+
 
     def clean_name(self):
         cleaned_data = self.cleaned_data.get('name')
@@ -48,7 +49,7 @@ class MailingForm(StyleFormMixin, ModelForm):
 class ClientForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('owner',)
 
     def clean_name(self):
         cleaned_data = self.cleaned_data.get('name')
@@ -63,7 +64,7 @@ class ClientForm(StyleFormMixin, ModelForm):
 class MessageForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ('owner',)
 
     # def clean_title(self):
     #     cleaned_data = self.cleaned_data.get('name')
@@ -79,3 +80,9 @@ class MailingLogForm(StyleFormMixin, ModelForm):
     class Meta:
         model = MailingLog
         fields = '__all__'
+
+
+class MailingManagerForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ('is_active',)
