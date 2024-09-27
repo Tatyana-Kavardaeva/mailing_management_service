@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="col-12 mb-5 text-center">
+            <a class="btn btn-secondary btn-lg button-size" href="{% url 'main:messages_list' %}">
+                Сообщения
+            </a>
+        </div>
+        <div class="col-12 mb-5 text-center">
+            <a class="btn btn-secondary btn-lg button-size" href="{% url 'main:clients_list' %}">
+                Клиенты
+            </a>
+        </div>
+        <div class="col-12 mb-5 text-center">
+            <a class="btn btn-secondary btn-lg button-size" href="{% url 'main:mailings_list' %}">
+                Рассылки
+            </a>
+        </div>
+        <div class="col-12 mb-5 text-center">
+            <a class="btn btn-secondary btn-lg button-size" href="{% url 'users:users_list' %}">
+                Пользователи
+            </a>
+        </div>
+    </div>
+</div>
+<style>
+    .button-size {
+        width: 350px;
+        height: 50px;
+        display: inline-block;
+    }
+</style>
+
+<div class="col-12 mt-5">
+    <h3 class="text-center">Интересные идеи и полезные советы по интернет-маркетингу</h3>
+    <div class="row">
+        {% if random_posts %}
+        {% for post in random_posts %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <img src="{{ post.image | media_filter }}" class="card-img-top"
+                         style="height: 200px; width: 100%; object-fit: contain;">
+                    <p class="card-text">
+                        {{ post.body|slice:":100" }}{% if post.body|length > 100 %}...{% endif %}
+                    </p>
+                    <p class="card-text">Просмотры: {{ post.view_counter }}</p>
+                    <div class="d-flex flex-column">
+                        <a type="button" class="btn btn-outline-dark btn-sm mb-1"
+                           href="{% url 'blog:blog_view' post.pk %}" role="button">Читать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-center">Скоро здесь появятся новые статьи.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
