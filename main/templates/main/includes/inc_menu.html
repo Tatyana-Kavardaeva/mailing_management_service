@@ -8,10 +8,9 @@
                 <h5 class="text-white">Навигация</h5>
                 <ul class="list-unstyled">
                     <li><a href="{% url 'main:main_page' %}" class="text-white">Главная</a></li>
-                    <li><a href="{% url 'main:contact' %}" class="text-white">Контакты</a></li>
-
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
+                    <li><a href="{% url 'main:logs_list' %}" class="text-white">Отчеты об отправке</a></li>
                     {% else %}
                     <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
                     <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
