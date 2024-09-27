@@ -1,4 +1,6 @@
 import string
+
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
@@ -65,3 +67,24 @@ class UserPasswordResetView(FormView):
             recipient_list=[email]
         )
         return super().form_valid(form)
+
+
+@login_required
+def viewing_users(request):
+    user = request.user
+    users = User.objects.exclude(email='admin@example.com').prefetch_related('mailing_set')
+    context = {'users_list': users}
+    if user.has_perm('users.set_viewing_user'):
+        return render(request, 'users/users_list.html', context)
+    return render(request, 'users/no_permission.html', context)
+
+
+def toggle_activity(request, pk):
+    user_item = get_object_or_404(User, pk=pk)
+    if user_item.is_active:
+        user_item.is_active = False
+    else:
+        user_item.is_active = True
+
+    user_item.save()
+    return redirect(reverse('users:users_list'))
