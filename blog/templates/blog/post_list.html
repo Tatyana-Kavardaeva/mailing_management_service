@@ -5,9 +5,6 @@
     <h2 class="display-4">Блог</h2>
     <h5>Интересные идеи и полезные советы по интернет-маркетингу</h5>
 </div>
-<div class="col-12 mb-5 text-center">
-    <a class="btn btn-outline-primary" href="{% url 'blog:blog_create' %}">Добавить статью</a>
-</div>
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -27,12 +24,7 @@
                         <div class="d-flex flex-column">
                             <a type="button" class="btn btn-primary btn-sm mb-1"
                                href="{% url 'blog:blog_view' object.pk %}" role="button">Читать</a>
-                            <a type="button" class="btn btn-outline-primary btn-sm mb-1"
-                               href="{% url 'blog:blog_update' object.pk %}" role="button">Редактировать</a>
-                            <a type="button" class="btn btn-outline-danger btn-sm mb-1"
-                               href="{% url 'blog:blog_delete' object.pk %}" role="button">Удалить</a>
                         </div>
-                        <a href="{% url 'blog:toggle_activity' object.pk %}">Снять с публикации</a>
                     </div>
                 </div>
             </div>
