@@ -27,31 +27,27 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/ваш_пользователь/ваш_репозиторий.git
-   cd ваш_репозиторий
+   git clone https://github.com/Tatyana-Kavardaeva/mailing_management_service
+   cd mailing_management_service
    ```
 
-2. Установите зависимости:
+2. Установите зависимости с помощью Poetry:
    ```bash
-   pip install -r requirements.txt
+   poetry install
    ```
 
-3. Настройте переменные окружения:
-   Создайте файл `.env` в корне проекта и добавьте следующие переменные:
-   ```
-   SECRET_KEY=ваш_секретный_ключ
-   DEBUG=True
-   DATABASE_URL=postgres://user:password@localhost:5432/db_name
+3. Активируйте виртуальное окружение:
+   ```bash
+   poetry shell
    ```
 
-4. Примените миграции:
+4. Настройте переменные окружения:
+   Создайте файл `.env` в корне проекта и добавьте следующие переменные, перечисленные в .env.sample
+   ```
+
+5. Примените миграции:
    ```bash
    python manage.py migrate
-   ```
-
-5. Создайте суперпользователя:
-   ```bash
-   python manage.py createsuperuser
    ```
 
 6. Запустите сервер:
